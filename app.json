@@ -1,0 +1,22 @@
+{
+  "name": "github-rpg",
+  "description": "Create Habitica todo tasks for Github issues and complete them when Complete todo tasks ",
+  "repository": "https://github.com/danielbe1/github-rpg",
+  "keywords": [
+    "habitrpg",
+    "habitica",
+    "github"
+  ],
+  "env": {
+    "USER_KEY": {
+      "description": "The unique Habitica User ID (https://habitica.com/#/options/settings/api)."
+    },
+    "API_KEY": {
+      "description": "the secret Habitica API Token (https://habitica.com/#/options/settings/api)."
+    },
+    "LABEL_TO_IGNORE": {
+      "description": "A label that can be added to Github issues that will cause the service to ignore issues",
+      "value": "github-rpg-ignore"
+    }
+  }
+}
