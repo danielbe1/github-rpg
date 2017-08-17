@@ -6,6 +6,14 @@ class HabiticaCLientException(Exception):
         Exception.__init__(self, *args, **kwargs)
 
 
+class HabiticaCLientConfigError(HabiticaCLientException):
+    '''
+    Thrown if configuration for the habitica API client is missing or invalid.
+    '''
+    def __init__(self, description):
+        HabiticaCLientException.__init__(self, description)
+
+
 class HabiticaCLientConnectivityError(HabiticaCLientException):
     '''
     The base class for all habitica API client connectivity errors; e.g., request timeouts.
@@ -34,8 +42,8 @@ class HabiticaClientAPIError(HabiticaCLientException):
     '''
     The base class for API logical and validation errors.
     '''
-    def __init__(self, message):
-        HabiticaCLientConnectivityError.__init__(self, message)
+    def __init__(self, description):
+        HabiticaCLientException.__init__(self, description)
 
 
 class HabiticaClientHttpStatusCodeError(HabiticaCLientException):
@@ -46,7 +54,7 @@ class HabiticaClientHttpStatusCodeError(HabiticaCLientException):
     it depends on the speicifc API call itself.
     '''
     def __init__(self, status_code, body):
-        HabiticaCLientConnectivityError.__init__(self, f'unexpected status code: {status_code}: {body}')
+        HabiticaCLientException.__init__(self, f'unexpected status code: {status_code}: {body}')
 
         self.status_code = status_code
 
@@ -55,13 +63,13 @@ class HabiticaClientAPIUnauthorizedError(HabiticaClientAPIError):
     '''
     Thrown when the credentials (user and api keys) are missing or invalid.
     '''
-    def __init__(self, message):
-        HabiticaCLientConnectivityError.__init__(self, f'unauthorized action: {message}')
+    def __init__(self, description):
+        HabiticaCLientConnectivityError.__init__(self, f'unauthorized action: {description}')
 
 
 class HabiticaClientAPIMalformedObjectError(HabiticaClientAPIError):
     '''
     Thrown when an API object is invalid; e.g., missing fields in object JSON.
     '''
-    def __init__(self, object, message):
-        HabiticaCLientConnectivityError.__init__(self, f'malformed {object} object: {message}')
+    def __init__(self, obj, description):
+        HabiticaCLientConnectivityError.__init__(self, f'malformed {obj} object: {description}')

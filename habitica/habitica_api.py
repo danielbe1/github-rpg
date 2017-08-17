@@ -1,4 +1,5 @@
 import logging
+import os
 
 import requests
 
@@ -12,9 +13,15 @@ class HabiticaAPIClient:
     '''
 
     def __init__(self):
+        if 'USER_KEY' not in os.environ:
+            raise HabiticaCLientConfigError('missing user key configuration')
+
+        if 'API_KEY'not in os.environ:
+            raise HabiticaCLientConfigError('missing api key configuration')
+
         self.auth_headers = {
-            'x-api-user': '7f704db5-b8e5-4a45-a6e3-f8a1084bf40f',
-            'x-api-key': '75857151-0388-4c53-a461-5409c502a511'
+            'x-api-user': os.environ['USER_KEY'],
+            'x-api-key': os.environ['API_KEY']
         }
 
     def get_todo_task(self, alias):
@@ -137,7 +144,7 @@ class HabiticaAPIClient:
             return
 
         logging.info('deleting task')
-        self.make_delete_api_call(f'https://habitica.com/api/v3/tasks/{alias}')
+        self._make_delete_api_call(f'https://habitica.com/api/v3/tasks/{alias}')
 
     def update_todo_task(self, alias, text=None, priority=None):
         '''
@@ -175,7 +182,7 @@ class HabiticaAPIClient:
 
         return response_json
 
-    def make_delete_api_call(self, url):
+    def _make_delete_api_call(self, url):
         response_json = self._validate_request(lambda: requests.delete(url, headers=self.auth_headers), True)
 
         return response_json

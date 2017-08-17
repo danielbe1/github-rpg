@@ -49,9 +49,9 @@ class GithubWebhookHandler:
             self.habitica_api_client.delete_todo_task(issue.alias)
 
     def handle_issue_opened(self, issue):
-        logging.info(f'issue {number} titled "{title}" opened')
+        logging.info(f'issue {issue.number} titled "{issue.title}" opened')
 
-        self.habitica_api_client.create_new_todo_task(issue.alias, issue.habitica_task_difficulty)
+        self.habitica_api_client.create_new_todo_task(issue.alias, issue.title, issue.habitica_task_difficulty)
 
     def handle_issue_reopenened(self, issue):
         logging.info(f'issue {issue.number} titled "{issue.title}" reopened')
@@ -61,7 +61,7 @@ class GithubWebhookHandler:
     def handle_issue_closed(self, issue):
         logging.info(f'issue {issue.number} titled "{issue.title}" closed')
 
-        self.habitica_api_client.complete_todo_task(issue.alias, issue.title)
+        self.habitica_api_client.complete_todo_task(issue.alias, issue.title, issue.habitica_task_difficulty)
 
     def handle_issue_edited(self, issue):
         logging.info(f'issue {issue.number} titled "{issue.title}" edited')
