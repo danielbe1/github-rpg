@@ -1,7 +1,6 @@
 import re
 
 from github.exceptions import GithubWebhookMalformedEventError
-from habitica.habitica_api import HabiticaAPIClient
 from habitica.habitica_task import HabiticaTask
 
 
