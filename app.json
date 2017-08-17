@@ -18,5 +18,10 @@
       "description": "A label that can be added to Github issues that will cause the service to ignore issues",
       "value": "github-rpg-ignore"
     }
-  }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
 }
