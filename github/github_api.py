@@ -24,7 +24,7 @@ class GithubWebhookHandler:
 
         action = request_json['action'].lower()
         issue = GithubIssueObject.from_json(request_json)
-        logging.info(request_json)
+
         if issue.label_assigned(self.ignored_label) and action == 'labeled':
             self.delete_task_if_exists(issue)
         elif not issue.label_assigned(self.ignored_label) and action == 'unlabeled':

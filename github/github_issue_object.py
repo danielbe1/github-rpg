@@ -5,12 +5,13 @@ from habitica.habitica_task import HabiticaTask
 
 
 class GithubIssueObject:
-    def __init__(self, number, title, body, labels):
+    def __init__(self, number, repo_id, title, body, labels):
+        self.github_repo_id = repo_id
         self.number = number
         self.title = title
         self.body = body
         self.labels = labels
-        self.alias = self.get_task_alias(number)
+        self.alias = self.get_task_alias(number, repo_id)
         self.habitica_task_difficulty = self.get_difficulty(body)
 
     @staticmethod
@@ -23,9 +24,14 @@ class GithubIssueObject:
             raise GithubWebhookMalformedEventError('issues', 'missing "title" field in issue object')
         elif 'labels' not in js['issue']:
             raise GithubWebhookMalformedEventError('issues', 'missing "labels" field in issue object')
+        elif 'repository' not in js:
+            raise GithubWebhookMalformedEventError('issues', 'missing "repository" object')
+        elif 'id' not in js['repository']:
+            raise GithubWebhookMalformedEventError('issues', 'missing "repository" object')
 
         return GithubIssueObject(
             number = js['issue']['number'],
+            repo_id= js['repository']['id'],
             title = js['issue']['title'],
             body = js['issue'].get('body', ''),
             labels = map(GithubIssueObject.parse_label, js['issue']['labels']))
@@ -41,8 +47,8 @@ class GithubIssueObject:
         return label in self.labels
 
     @staticmethod
-    def get_task_alias(number):
-        return f'github_issue_{number}'
+    def get_task_alias(number, github_repo_id):
+        return f'repo_{github_repo_id}_issue_{number}'
 
     @staticmethod
     def get_difficulty(body):
