@@ -1,5 +1,22 @@
-# github-rpg
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/danielbe1/github-rpg)
+====================================================================================================================================
 
+This is a little service I've created to make organizing projects more rewarding by turning Github issues to Habitica tasks.
+The service is intended to be deployed on the Heroku platform and you can try it by pressing the nice purple button above.
+
+Service configuration
+=====================
+The service requireds only 3 configuration settings:
+* USER_KEY - The Habitca user key.
+* API_KEY - The Habitica API key.
+* LABEL_TO_IGNORE - The name of a label that can be applied to issues that you want the service to ignore.
+
+Setting up the Github repo
+==========================
+In your repo webhook settings set the webhook as follows:
+* Payload URL - The URL for the heroku application you created.
+* Content type - Set this to `application/json`
+* Set the webhook events to `Send me everything.`
 
 Issues <--> Tasks in a nutshell
 ==============================
