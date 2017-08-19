@@ -6,7 +6,7 @@ The service is intended to be deployed on the Heroku platform and you can try it
 
 Service configuration
 =====================
-The service requireds only 3 configuration settings:
+The service requires only 3 configuration settings:
 * USER_KEY - The Habitca user key.
 * API_KEY - The Habitica API key.
 * LABEL_TO_IGNORE - The name of a label that can be applied to issues that you want the service to ignore.
